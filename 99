@@ -1,0 +1,102 @@
+'''
+print ('-----')
+temp = input ('caishuzi')
+guess = int(temp)
+if guess == 8:
+    print('waaaaaa')
+    print('so what')
+else:
+    print('err')
+print ('go!')
+
+pause
+'''
+'''
+score = input('shurufenshu:  ')
+dengji = int(score)
+if 100>= dengji > 90:
+    print('dengji:A')
+elif 80<dengji<=90:
+    print('dengji:B')
+elif 80>= dengji > 60:
+    print('dengji:C')
+elif dengji<=60:
+   print('dengji:D')
+else:
+    print('error')
+'''
+'''
+a = 9
+b = 10
+c = 9 if a>b else 10
+
+print (c)
+'''
+'''
+#元组
+tuple1 = ('aaa','bbb','ccc','ddd','eee')
+tuple2 = tuple1[:2]+('hello',)+tuple1[2:]
+
+#获取web
+import urllib.request
+respons = urllib.request.urlopen("http://www.baidu.com",timeout=1)
+html = respons.read()
+print (html)
+
+#解码
+html = html.decode('utf-8')
+'''
+'''
+#downloadjpg
+
+import urllib.request
+respons = urllib.request.urlopen('http://placekitten.com/g/500/600')
+cat_img = respons.read()
+
+with open('cat.jpg','wb') as f:
+    f.write(cat_img)
+'''
+'''
+#获取链接地址
+respons.geturl()
+#获取http message 对象
+respons.info()
+
+respons.getcode()
+'''
+
+#Auto translation 
+import urllib.request
+import urllib.parse
+import json
+
+content = input('input:')
+url = 'http://fanyi.youdao.com/translate?smartresult=dict&smartresult=rule&smartresult=ugc&sessionFrom=https://www.baidu.com/link'
+data={}
+data['type']='AUTO'
+data['i']=content
+data['doctype']='json'
+data['xmlVersion']='1.8'
+data['keyfrom']='fanyi.web'
+data['ue']='UTF-8'
+data['action']='FY_BY_CLICKBUTTON'
+data['typoResult']='true'
+data = urllib.parse.urlencode(data).encode('utf-8')
+
+response = urllib.request.urlopen(url,data)
+html = response.read().decode('utf-8')
+'''
+target = json.loads(html)
+print('output:%s'%(target['translateResult'][0][0]['tgt']))
+'''
+print(html)
+
+
+
+
+
+
+
+
+    
+    
