@@ -139,6 +139,14 @@ image = image.filter(ImageFilter.BLUR)
 image.save('code.jpg', 'jpeg');
 
 
+#born random char
+import random
+a = input('enter char number:')
+for i in range(0,int(a)):
+    chars = chr(random.randint(65,122))
+    print('%s'%(chars),end = '')
+
+
 
 
 
