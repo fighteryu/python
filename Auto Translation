@@ -226,6 +226,14 @@ def hanoi(n,A,B,C):
 n = int(input('盘子数量？'))
 hanoi(n,'A','B','C')
 
+#打包便于大数据调用
+#demo
+import pickle
+name = ['123','abc','222','345',['8','9']]
+pickle_t = open('name_data.aaa','wb')
+pickle.dump(name,pickle_t)
+
+c = pickle.load(name_data.aaa) 
 
 
 
