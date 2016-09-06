@@ -233,7 +233,7 @@ name = ['123','abc','222','345',['8','9']]
 pickle_t = open('name_data.aaa','wb')
 pickle.dump(name,pickle_t)
 
-c = pickle.load(name_data.aaa) 
+c = pickle.load(pickle_t) 
 
 
 
