@@ -1,3 +1,5 @@
+#salt+哈希算法
+
 import os
 from hashlib import sha256
 from hmac import HMAC
