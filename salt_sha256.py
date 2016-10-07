@@ -3,7 +3,6 @@ from hashlib import sha256
 from hmac import HMAC
 
 def encrypt_password(password, salt=None):
-    """Hash password on the fly."""
     if salt is None:
         salt = os.urandom(8) # 64 bits.
 
