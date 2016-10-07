@@ -1,4 +1,5 @@
 #salt+哈希算法
+#这里先随机生成64bits的salt，再选择SHA-256算法使用HMAC对密码和salt进行10次叠代混淆，最后将salt和hash结果一起返回。
 
 import os
 from hashlib import sha256
