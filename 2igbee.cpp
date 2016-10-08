@@ -700,3 +700,131 @@ void Ds1302_Init(void)
 
  
 }
+
+
+#ifndef __12864_H__
+#define __12864_H__
+
+#include <reg52.h>
+#include <intrins.h>
+
+
+sbit RS = P2^4;
+sbit RW = P2^5;
+sbit E  = P2^6;
+sbit RES = P2^3;
+sbit PSB = P2^1;
+sbit PAUSE = P3^0;
+
+#define DataPort P0        //单片机 P0<------> 液晶DB0-DB7
+
+ void DelayUs2x(unsigned char t)
+{   
+ while(--t);
+}
+void DelayMs(unsigned char t)
+{
+     
+ while(t--)
+ {
+     //大致延时1mS
+     DelayUs2x(245);
+	 DelayUs2x(245);
+ }
+}
+/*------------------------------------------------
+                    检测忙位
+------------------------------------------------*/
+void Check_Busy()
+{  
+    RS=0;
+    RW=1;
+    E=1;
+    DataPort=0xff;
+    while((DataPort&0x80)==0x80);//忙则等待
+    E=0;
+}
+/*------------------------------------------------
+                   写命令
+------------------------------------------------*/
+void Write_Cmd(unsigned char Cmd)
+{
+	Check_Busy();
+	RS=0;
+	RW=0;
+	E=1;
+	DataPort=Cmd;
+	DelayUs2x(5);
+	E=0;
+	DelayUs2x(5);
+}
+/*------------------------------------------------
+                    写数据
+------------------------------------------------*/
+void Write_Data(unsigned char Data)
+{
+	Check_Busy();
+	RS=1;
+	RW=0;
+	E=1;
+	DataPort=Data;
+	DelayUs2x(5);
+	E=0;
+	DelayUs2x(5);
+}
+/*------------------------------------------------
+                   液晶屏初始化
+------------------------------------------------*/
+void Init_12864()
+{  
+   DelayMs(40);           //大于40MS的延时程序
+   PSB=1;                 //设置为8BIT并口工作模式
+   DelayMs(1);            //延时
+   RES=0;                 //复位
+   DelayMs(1);            //延时
+   RES=1;                 //复位置高
+   DelayMs(10);
+   Write_Cmd(0x30);       //选择基本指令集
+   DelayUs2x(50);         //延时大于100us
+   Write_Cmd(0x30);       //选择8bit数据流
+   DelayUs2x(20);         //延时大于37us
+   Write_Cmd(0x0c);       //开显示(无游标、不反白)
+   DelayUs2x(50);         //延时大于100us
+   Write_Cmd(0x01);       //清除显示，并且设定地址指针为00H
+   DelayMs(15);           //延时大于10ms
+   Write_Cmd(0x06);       //指定在资料的读取及写入时，设定游标的移动方向及指定显示的移位，光标从右向左加1位移动
+   DelayUs2x(50);         //延时大于100us
+}
+
+/*------------------------------------------------
+                   显示字符串
+x:横坐标值，范围0~8
+y:纵坐标值，范围1~4
+------------------------------------------------*/
+void LCD_PutString(unsigned char x,unsigned char y,unsigned char code *s)
+{ 
+ switch(y)
+     {
+	  case 1: Write_Cmd(0x80+x);break;
+	  case 2: Write_Cmd(0x90+x);break;
+	  case 3: Write_Cmd(0x88+x);break;
+	  case 4: Write_Cmd(0x98+x);break;
+      default:break;
+	 }
+ while(*s>0)
+   { 
+      Write_Data(*s);
+      s++;
+      DelayUs2x(50);
+   }
+}
+/*------------------------------------------------
+                      清屏
+------------------------------------------------*/
+void ClrScreen()
+{ 
+   Write_Cmd(0x01);
+   DelayMs(15);
+}
+
+#endif
