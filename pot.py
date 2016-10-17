@@ -24,4 +24,27 @@ a = A()
 s = a.S(3,4)
 c = a.C(3,4)
 print(s,c)
+
+
+def nextnum(num):
+    temp = '0'
+    result = ''
+    counter = 0
+    str_num = str(num)
+    for ch in str_num:
+        if ch != temp:
+            result += str(counter)
+            result += temp
+            temp = ch
+            counter = 1
+        else:
+            counter += 1
+    result += str(counter)
+    result += temp
+    return int(result)
+lst = [1] 
+for x in xrange(0,30):
+    lst.append(nextnum(lst[x]))
+print(len(str(lst[30])))
+
   
