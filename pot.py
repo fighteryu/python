@@ -47,4 +47,31 @@ for x in xrange(0,30):
     lst.append(nextnum(lst[x]))
 print(len(str(lst[30])))
 
+#3
+import time as t
+class clock():
+    def __init__(self):
+        self.unit = ['y','m','d','h','mi','s']
+        self.prompt = 'no beginning'
+        self.lasted = []
+        self.begin = 0
+        self.end = 0
+    def __str__(self):
+        return self.prompt
+    
+    __repr__ = __str__
+    def start(self):
+        print('start....')
+        self.begin = t.localtime()
+    def stop(self):
+        self.end = t.localtime()
+        self._calc()
+        print('stop!')
+    def _calc(self):
+        self.lasted = []
+        self.prompt =  'lasted:'
+        for index in range(6):
+            self.lasted.append(self.end[index] - self.begin[index])
+            if self.lasted[index]:
+                self.prompt += (str(self.lasted[index]) + self.unit[index])
   
