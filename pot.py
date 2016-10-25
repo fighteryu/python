@@ -25,7 +25,7 @@ s = a.S(3,4)
 c = a.C(3,4)
 print(s,c)
 
-
+####回忆下面这段
 def nextnum(num):
     temp = '0'
     result = ''
