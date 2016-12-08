@@ -113,3 +113,15 @@ class a:
 		print('setting...',self,instance,value)
 	def __delete__(self,instance):
 		print('delete...',self,instance)
+
+#5 Xpath
+import urllib.request
+import scrapy
+from lxml import etree
+html=urllib.request.urlopen("http://www.2345.com")
+response=html.read()
+selecter=etree.HTML(response)
+pipid=selecter.xpath("//ul[@class='cont-list']//li/a/text()")
+for i in range(0,len(pipid)):
+    print(pipid[i])
+
