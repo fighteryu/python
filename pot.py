@@ -136,7 +136,10 @@ for i in range(1111111,10000000):
         response2=response.read().decode('utf-8')
 	#json.load用于将原先str数据类型转化为list数据类型
         Jd=json.loads(response2)
-        print(Jd[0]['id'])
-        print(Jd[0]['op'])
+        with open("list.txt","a") as f:
+            f.write(Jd[0]['id'])
+            f.write("\t")
+            f.write(Jd[0]['op'])
+            f.write("\n")
     except Exception:
-        pass
+        print('err....')
