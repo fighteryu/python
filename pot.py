@@ -125,3 +125,18 @@ pipid=selecter.xpath("//ul[@class='cont-list']//li/a/text()")
 for i in range(0,len(pipid)):
     print(pipid[i])
 
+#6 JD价格Json数据
+import urllib.request
+from lxml import etree
+import json
+for i in range(1111111,10000000):
+    try:
+        url='https://p.3.cn/prices/mgets?&skuIds=J_'+str(i)
+        response=urllib.request.urlopen(url)
+        response2=response.read().decode('utf-8')
+	#json.load用于将原先str数据类型转化为list数据类型
+        Jd=json.loads(response2)
+        print(Jd[0]['id'])
+        print(Jd[0]['op'])
+    except Exception:
+        pass
