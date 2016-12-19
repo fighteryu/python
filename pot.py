@@ -143,3 +143,53 @@ for i in range(1111111,10000000):
             f.write("\n")
     except Exception:
         print('err....')
+	
+#使用代理，以防止IP被封或IP次数受限：
+proxy_handler = urllib.request.ProxyHandler(proxies={"http": "1.1.1.1:8080"})
+
+opener = urllib.request.build_opener(proxy_handler)     # 利用代理创建opener实例
+response = opener.open(url)                             # 直接利用opener实例打开url
+
+urllib.request.install_opener(opener)                   # 安装全局opener，然后利用urlopen打开url
+response = urllib.request.urlopen(url)
+
+
+# 使用cookie和cookiejar,应对服务器检查
+cookie_jar = http.cookiejar.CookieJar()
+cookie_jar_handler = urllib.request.HTTPCookieProcessor(cookiejar=cookie_jar)
+opener = urllib.request.build_opener(cookie_jar_handler)
+response = opener.open(url)
+
+
+# 发送在浏览器中获取的cookie,两种方式:
+# (1)直接放到headers里
+headers = {
+    "User-Agent": "Mozilla/4.0 (compatible; MSIE 5.5; Windows NT)",
+    "Cookie": "PHPSESSID=btqkg9amjrtoeev8coq0m78396; USERINFO=n6nxTHTY%2BJA39z6CpNB4eKN8f0KsYLjAQTwPe%2BhLHLruEbjaeh4ulhWAS5RysUM%2B; "
+}
+request = urllib.request.Request(url, headers=headers)
+
+# (2)构建cookie,添加到cookiejar中
+cookie = http.cookiejar.Cookie(name="xx", value="xx", domain="xx", ...)
+cookie_jar.set_cookie(cookie)
+response = opener.open(url)
+
+
+# 同时使用代理和cookiejar
+opener = urllib.request.build_opener(cookie_jar_handler)
+opener.add_handler(proxy_handler)
+response = opener.open("https://www.baidu.com/")
+
+
+# 抓取网页中的图片：同样适用于抓取网络上的文件。右击鼠标，找到图片属性中的地址，然后进行保存。
+response = urllib.request.urlopen("http://ww3.sinaimg.cn/large/7d742c99tw1ee7dac2766j204q04qmxq.jpg", timeout=120)
+with open("test.jpg", "wb") as file_img:
+    file_img.write(response.read())
+
+
+# HTTP认证：即HTTP身份验证
+password_mgr = urllib.request.HTTPPasswordMgrWithDefaultRealm()     # 创建一个PasswordMgr
+password_mgr.add_password(realm=None, uri=url, user='username', passwd='password')   # 添加用户名和密码
+handler = urllib.request.HTTPBasicAuthHandler(password_mgr)         # 创建HTTPBasicAuthHandler
+opener = urllib.request.build_opener(handler)                       # 创建opner
+response = opener.open(url, timeout=10)                             # 获取数据
