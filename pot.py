@@ -193,3 +193,20 @@ password_mgr.add_password(realm=None, uri=url, user='username', passwd='password
 handler = urllib.request.HTTPBasicAuthHandler(password_mgr)         # 创建HTTPBasicAuthHandler
 opener = urllib.request.build_opener(handler)                       # 创建opner
 response = opener.open(url, timeout=10)                             # 获取数据
+
+
+#邮件轰炸,如何隐藏发送者地址？
+import yagmail
+import time
+import random
+while 1:
+    if random.randint(3,100)%3==0:
+        a=time.localtime()
+        try:
+            m=yagmail.SMTP(user='sendemailadd',password='password',host='smtp.sina.com',port='25')
+            m.send(to='sendtomailadd',subject='this is a test mail by yagmail',contents=str(a))
+            print('邮件发送成功！')
+        except  Exception as e:
+            print('邮件未送达')
+    else:
+        print('pass')
