@@ -31,7 +31,7 @@ for i in range(0,len(urldata['data'])):
         yz=urldata['data'][i]['queryLeftNewDTO']['yz_num']#硬座
         rz=urldata['data'][i]['queryLeftNewDTO']['rz_num']#软座
         try:
-            if ze!='--' or ze!='无':
+            if ze!='--' and ze!='无':
                 s=m.SMTP(user='******',password='******',host='*******',port='25')
                 b=time.asctime()
                 s.send(to='********@gmail.com',subject='车次信息from12306',contents='尊敬的主人，截至'+str(b)+','+str(traincode)+'次列车已经有票，请抓紧到12306网站购买，错过就真的错过了！因邮件延时，说不定等你点开的时候就已经卖完喽，快点哦')
