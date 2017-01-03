@@ -210,3 +210,38 @@ while 1:
             print('邮件未送达')
     else:
         print('pass')
+	
+#requests方法，登录科学网，貌似保存了cookie了
+#面对复杂的网页会自动调整cookie，所以此方法无效，需要用到requests的session函数
+'''
+session=requests.Session()
+s=session.post(url,postdata)
+s=session.get(url)
+'''
+import requests
+import urllib.request
+import urllib.parse
+class science:
+    def __init__(self):
+        self.url='http://blog.sciencenet.cn/member.php?mod=logging&action=login2&loginsubmit=yes&infloat=yes'
+        self.headers={'User-Agent':'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
+        self.data={'username':'username',
+                   'password':'password',
+                   'kxwpassword':'password',
+                   'quickforward':'yes',
+                   'handlekey':'ls',
+                   'iflogin':'plus.php?mod=iframelogin'}
+        self.postdata=urllib.parse.urlencode(self.data).encode('utf-8')
+    def login(self):
+        '''
+        response=urllib.request.Request(self.url,self.postdata,self.headers)
+        html=urllib.request.urlopen(response)
+        '''
+        response=requests.post(self.url,self.postdata,self.headers)
+        cookies=response.cookies#获取到当前cookie
+        response2=requests.get(self.url,cookies)#将cookie再发送回页面
+        page=response2.text
+        print(page)
+	
+a=science()
+a.login()
