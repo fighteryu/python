@@ -215,7 +215,7 @@ while 1:
 #面对复杂的网页会自动调整cookie，所以此方法无效，需要用到requests的session函数
 '''
 session=requests.Session()
-s=session.post(url,postdata)
+s=session.post(url,data)
 s=session.get(url)
 '''
 import requests
