@@ -245,3 +245,18 @@ class science:
 	
 a=science()
 a.login()
+
+
+#读取数据库，并写入csv文件
+import pymssql
+import csv
+conn=pymssql.connect('127.0.0.1','username','keyword','databasename')
+curs=conn.cursor()
+curs.execute('select * from *******')
+with open('data.csv','a',newline='') as f:#newline=''这个不写会出现插入一条数据就空一行数据现象
+    writer=csv.writer(f)
+    writer.writerow(['id','data'])
+    for row in curs:
+        data=[row[2],row[3]]
+        writer.writerow(data)
+conn.close()
