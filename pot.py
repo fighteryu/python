@@ -260,3 +260,20 @@ with open('data.csv','a',newline='') as f:#newline=''这个不写会出现插入
         data=[row[2],row[3]]
         writer.writerow(data)
 conn.close()
+
+#电脑打卡上下班
+import pymssql
+import time
+conn=pymssql.connect('127.0.0.1','sa','sa','test')
+cursor=conn.cursor()
+idd=input('请输入你的工号：')
+timer=time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+try:
+    sql='INSERT INTO userinfo VALUES (%s,%d,%d,%s,%s,%d,%s)'
+    cursor.execute(sql,(1,idd,12,'dd','ss',5,timer))
+    print('机器打卡成功！')
+except:
+    print('error')
+
+conn.commit()
+conn.close()
