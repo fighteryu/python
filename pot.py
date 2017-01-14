@@ -275,5 +275,19 @@ try:
 except:
     print('error')
 
-conn.commit()
+conn.commit()#commit一定需要，如果没有无法插入数据，但是仍然占据一条自增ID
 conn.close()
+
+#数据可视化demo
+import numpy as num
+import pandas as pd
+import matplotlib.pylab as pyl
+import pymysql
+conn=pymysql.connect(host='',user='',passwd='',db='')
+sql='select * from ××××××'
+data=pd.read_sql(sql,conn)
+data1=data.T   #数据转置后方便提取整列的数据
+a=data1.values[3]
+b=data1.values[4]
+pyl.plot(a,b,'o')# 'o'是绘制散点图，a，b表示横纵轴
+pyl.show()#显示图像
