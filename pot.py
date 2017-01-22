@@ -291,3 +291,43 @@ a=data1.values[3]
 b=data1.values[4]
 pyl.plot(a,b,'o')# 'o'是绘制散点图，a，b表示横纵轴
 pyl.show()#显示图像
+
+
+#闲鱼年会奖品转卖
+import urllib
+import urllib.request
+import csv
+import time
+from lxml import etree
+
+def xianyu():
+    for i in range(2,100):
+        user_agent='Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'
+        url='https://s.2.taobao.com/list/list.htm?&page='+str(i)+'&q=%C4%EA%BB%E1%BD%B1%C6%B7'
+        html=urllib.request.urlopen(url)
+        page=html.read()
+        data=etree.HTML(page)
+        title=data.xpath("//h4[@class='item-title']//a/text()")
+        price=data.xpath("//div[@class='item-price price-block']//span/em/text()")
+        '''
+        with open('xianyu.csv','a',newline='') as f:
+            writer=csv.writer(f)
+            writer.writerow(['name','price'])
+            data1=[title,price]
+            writer.writerows(data1)
+            f.close()
+        '''
+        print('目前正在爬取第'+str(i)+'页')
+        for j in range(len(title)):
+            
+            with open('xianyu.txt','a') as f:
+                f.write(title[j])
+                f.write('\n')
+                f.write(price[j])
+                f.write('\n')
+                f.write('-------------------------\n')
+
+        time.sleep(5)
+
+if __name__=='__main__':
+    xianyu()
