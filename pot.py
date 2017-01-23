@@ -331,3 +331,9 @@ def xianyu():
 
 if __name__=='__main__':
     xianyu()
+
+
+#获取闲鱼总页码
+pagenum=data1.xpath("//span[@class='paginator-count']/text()")
+pagenum1=str(pagenum[0])
+pagenum2=pagenum1[1:4]#获取‘共100页’字符串中的100
