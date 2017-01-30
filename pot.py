@@ -337,3 +337,31 @@ if __name__=='__main__':
 pagenum=data1.xpath("//span[@class='paginator-count']/text()")
 pagenum1=str(pagenum[0])
 pagenum2=pagenum1[1:4]#获取‘共100页’字符串中的100
+
+
+#微信红包随机问题
+'''
+只是整数，取m-1个断点，将金额分成m份，取间隔即是金额
+'''
+import random
+a=input('输入总金额：')
+b=input('输入红包个数：')
+
+def hongbao(money,m):
+    #list1=[float('%.2f'%random.uniform(1,money)) for x in  range(m)]
+    list1=[random.randint(1,money-1) for x in range(m-1)]
+    list1.sort()
+    list2=[]
+    print(list1)
+    sum1=0
+    for i in range(m-1):
+        if i==0:
+            a=list1[i]
+            print(a)  
+        else:
+            b=list1[i]-list1[i-1]
+            print(b)
+    c=money-list1[m-2]
+    print(c)
+        
+hongbao(int(a),int(b))
