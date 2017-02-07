@@ -365,3 +365,57 @@ def hongbao(money,m):
     print(c)
         
 hongbao(int(a),int(b))
+
+
+#jieba模块验证红楼梦前八十回和后四十回相似度
+'''
+前四十回与后四十回相似21.023819%  中间四十回与后四十回相似度25.171706%
+你说这算不算一个作者写的？？？
+'''
+import jieba
+from gensim import corpora,models,similarities
+from collections import defaultdict
+data1=open('c:\\Users\\Administrator\\Desktop\\hlm1.txt','r',encoding='utf-8').read()
+data2=open('c:\\Users\\Administrator\\Desktop\\hlm3.txt','r',encoding='utf-8').read()
+a=jieba.cut(data1)
+b=jieba.cut(data2)
+data11=""
+for i in a:
+    data11+=i+" "
+
+data22=""
+for i in b:
+    data22+=i+" "
+
+documents=[data11,data22]
+texts=[[word for word in document.split()] for document in documents]
+frequency=defaultdict(int)
+for text in texts:
+    for token in text:
+        frequency[token]+=1
+#print(frequency)
+
+dictionary=corpora.Dictionary(texts)
+dictionary.save('dict2.txt')
+
+data3=open('c:\\Users\\Administrator\\Desktop\\hlm2.txt','r',encoding='utf-8').read()
+c=jieba.cut(data3)
+data33=""
+for i in c:
+    data33+=i+" "
+
+data333=data33
+#print(data333)
+#建立向量
+vec1=dictionary.doc2bow(data333.split())
+#print(vec1)
+corpus=[dictionary.doc2bow(text) for text in texts]
+corpora.MmCorpus.serialize('data333.mm',corpus)
+
+tfidf=models.TfidfModel(corpus)
+featureNum=len(dictionary.token2id.keys())
+#print(featureNum)
+index=similarities.SparseMatrixSimilarity(tfidf[corpus],num_features=featureNum)
+sim=index[tfidf[vec1]]
+#print(tfidf[vec1])
+print(sim)
