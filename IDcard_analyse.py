@@ -1,14 +1,5 @@
 import pickle
-'''
-aa=open('data.pkl','rb')
-a=pickle.load(aa)
-sfzid=input('ID:')
-if len(sfzid) != 18:
-    print('err')
-    
-else:
-    analyse()
-'''  
+ 
 def analyse():
     province=sfzid[0:6]
     birthday_year=sfzid[6:10]
