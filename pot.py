@@ -419,3 +419,17 @@ index=similarities.SparseMatrixSimilarity(tfidf[corpus],num_features=featureNum)
 sim=index[tfidf[vec1]]
 #print(tfidf[vec1])
 print(sim)
+
+
+#冒泡排序按字母顺序排序
+a="OkhaoPingCeilXu"
+b=[a[i] for i in range(len(a))]
+for i in range(len(b)):
+	for j in range(i+1,len(b)):
+		if ord(b[i])<96:
+			b[i],b[j]=b[j],b[i]
+c=""
+for i in range(len(b)):
+        c+=b[i]
+
+print(c)#输出khaoingeiluXCPO
