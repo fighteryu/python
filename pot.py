@@ -433,3 +433,64 @@ for i in range(len(b)):
         c+=b[i]
 
 print(c)#输出khaoingeiluXCPO
+
+
+#知乎
+
+import http.cookiejar
+import urllib.request
+import urllib.parse
+
+class zhihu():
+    def __init__(self):
+        self.url='https://www.zhihu.com/login/email'
+        self.headers={"Host":"www.zhihu.com",
+                     "User-Agent":"Mozilla/5.0 (Windows NT 6.1; rv:47.0) Gecko/20100101 Firefox/47.0",
+                     "Accept":"*/*",
+                     "Accept-Language":"zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3",
+                     "Accept-Encoding":"gzip, deflate, br",
+                     "X-Xsrftoken":"d85ac3db1867cb416cb45df4990cc8c5",
+                     "Content-Type":"application/x-www-form-urlencoded; charset=UTF-8",
+                     "X-Requested-With":"XMLHttpRequest",
+                     "Referer":"https://www.zhihu.com/",
+                     "Content-Length":"83",
+                     "Cookie":"********",
+                     "Connection":"keep-alive"}
+        self.data={"_xsrf":"×××××××××",
+                   "password":"××××××××××",
+                   "email":"××××××××××××"}
+        self.postdata=urllib.parse.urlencode(self.data).encode('utf-8')
+
+    
+    def login(self):
+        #No.1
+        '''
+        response=urllib.request.Request(self.url,self.postdata,self.headers)
+        response1=urllib.request.urlopen(response,timeout=10)
+        html=response1.read().decode('utf-8')
+        print(html)
+        '''
+        #No.2
+        #filename='cookie.txt'
+        #cookie_jar=http.cookiejar.MozillaCookieJar(filename)
+        cookie_jar=http.cookiejar.CookieJar()
+        cookie_jar_handle=urllib.request.HTTPCookieProcessor(cookie_jar)
+        opener=urllib.request.build_opener(cookie_jar_handle)
+        response=opener.open(self.url,self.postdata)
+        html=response.read().decode('utf-8')
+        print(html)
+        #cookie_jar.save(ignore_discard=True, ignore_expires=True)
+    
+    def spider(self):
+        url='https://www.zhihu.com/topics'
+        headers={"User-Agent":"Mozilla/5.0 (Windows NT 6.1; rv:47.0) Gecko/20100101 Firefox/47.0",
+                 "Cookie":"*****************************"}
+        response=urllib.request.Request(url,headers=headers)
+        response1=urllib.request.urlopen(response,timeout=10)
+        html=response1.read().decode('utf-8')
+        print(html)
+       
+a=zhihu()
+a.login()
+a.spider()
+    
