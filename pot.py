@@ -534,4 +534,36 @@ plt.imshow(wc)
 plt.axis("off")
 plt.show()
 
+
+#百度新闻订阅
+import urllib
+import urllib.parse
+import urllib.request
+from lxml import etree
+import time
+import yagmail as ya
+key_words=input('输入关键字：')
+urlcode=urllib.parse.quote(key_words)#quote转换为url编码，应该也可以不转，因为百度编码为utf-8
+num=0
+url='http://news.baidu.com/ns?word={urlcode}&pn={num}&tn=news'#format用法
+headers={'User-Agent':'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
+
+while 1:
+    url_new=url.format(urlcode=urlcode,num=str(num)) #format用法
+    html=urllib.request.Request(url_new,headers=headers)
+    response=urllib.request.urlopen(html).read().decode('utf-8')
+    data=etree.HTML(response)
+    title=data.xpath("//div[@class='result']//h3//a/descendant-or-self::text()")#获取到了a标签中的所有文字，但是em标签中的关键字仍然占列表单独一个元素
+    href=data.xpath("//div[@class='result']//h3//a/@href")
+
+    try:
+        m=ya.SMTP(user='×××××××××',password='××××××××',host='×××××××××',port='×××')
+        m.send(to='×××××××××××',subject=key_words+'新闻',contents=href+title)
+        print('订阅邮件发送成功')
+    except Exception as e:
+        print('error')
+        
+    num+=10
+    time.sleep(5)
+
     
