@@ -12,11 +12,25 @@
 ## 生成exe文件
 * pip installer 
 * installer -F  .py
+
+
+## 生成当前环境安装包列表
+* pip freeze>requirements.txt
+
+
 ## 正则匹配
 ```
 a='<title>helloworld</title>'
 b=re.findall('<title>(.*?)</title>',a,flags=re.S)[0]
 print(b)#helloworld
+```
+
+## jupyter更改默认路径
+* cmd----jupyter notebook --generate-config 生成jupyter_notebook_config.py文件
+* 更改文件配置
+```
+## The directory to use for notebooks and kernels.
+c.NotebookApp.notebook_dir = 'D:\\jupyter'
 ```
 
   
