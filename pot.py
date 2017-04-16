@@ -569,28 +569,31 @@ while 1:
 
 
 #获取本地计算机信息
+
 import socket
 import platform
 import getpass
 import pymysql
 import datetime
-
-#获取信息
+'''
+获取信息
+'''
 hostname=platform.node()#计算机名
 ip=socket.gethostbyname(hostname)#系统ip地址
 sys_name=platform.platform()#系统名称
 sys_arch=platform.architecture()#系统架构
 user_name=getpass.getuser()#系统当前登录用户
 login_time=datetime.datetime.now()
-
-#连接数据库
+'''
+连接数据库
+'''
 try:
     conn=pymysql.connect(host='127.0.0.1',port=3306,user='root',passwd='root',db='test')
     cursor=conn.cursor()
     sql='INSERT INTO info VALUES (%s,%s,%s,%s,%s,%s)'
     cursor.execute(sql,(hostname,ip,sys_name,sys_arch[0],user_name,str(login_time)))
     conn.commit()
-    conn.close
+    conn.close()
 except Exception as e:
     print('error')
 
