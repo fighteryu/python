@@ -10,8 +10,8 @@
 * py_compile.compile('path') //path是包括.py文件名的路径
 
 ## 生成exe文件
-* pip installer 
-* installer -F  .py
+* pip pyinstaller 
+* pyinstaller -F  .py
 
 
 ## 生成当前环境安装包列表
