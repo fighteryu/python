@@ -597,4 +597,40 @@ try:
 except Exception as e:
     print('error')
 
+
+# 杭口是个好医院
+
+#download img
+import urllib.request
+url='http://51dentist.com/img/doctors/{number}.jpg'
+for i in range(1,276):
+    urlpage=url.format(number=i)
+    file="C:/Users/Administrator/Desktop/new/"+str(i)+'.jpg'
+    urllib.request.urlretrieve(urlpage,filename=file)
+
+
+#download introduction
+import requests
+import json
+
+url='http://51dentist.com/front.php?r=yuyue/doctors'
+
+class hangkou():
+    for i in range(1,28):
+        data={
+            "currentPage":i,
+            "pageSize":10,
+            "hospitalCode":"HZ04",
+            }
+        req=requests.post(url,data)
+        s=req.text
+        dit=json.loads(s)
+        for j in range(0,len(dit["bizObj"])):
+            print(dit["bizObj"][j]["docName"])
+            print(dit["bizObj"][j]["introduction"])
+            print("--------------------------------------------")
+
+a=hangkou()
+print(a)
+
     
