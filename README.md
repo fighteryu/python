@@ -11,7 +11,7 @@
 
 ## 生成exe文件
 * pip pyinstaller 
-* pyinstaller -F  .py
+* pyinstaller -F  .py --noconsole //取消调试框
 
 
 ## 生成当前环境安装包列表
