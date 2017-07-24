@@ -633,4 +633,46 @@ class hangkou():
 a=hangkou()
 print(a)
 
+
+# 差评
+
+import easygui as g
+import time
+import getpass
+import pickle
+import six
+import appdirs
+import packaging
+import packaging.version
+import packaging.specifiers
+import packaging.requirements
+import datetime
+
+a=open('tt.yh','rb')
+aa=pickle.load(a)
+
+name=getpass.getuser()
+
+today=tuple(time.localtime(time.time()))
+today0=str(today[1])+'-'+str(today[2])
+birthday=aa[name][0]
+rztime=aa[name][1].split('-')
+
+s=datetime.datetime(today[0],today[1],today[2])
+b=datetime.datetime(int(rztime[0]),int(rztime[1]),int(rztime[2]))
+
+tt=str(s-b)
+ttt=tt.split(' ')
+
+#print(ttt[0])
+
+if today0==birthday:
+    msg0='今天这是您入司第'+ttt[0]+'天,祝您生日快乐！'
+    g.msgbox(msg=msg0,image='0.gif',ok_button='谢谢')
+else:
+    msg1='这是您入司第'+ttt[0]+'天,祝您一天工作愉快！'
+    g.msgbox(msg=msg1,ok_button='谢谢')
+    
+
+
     
